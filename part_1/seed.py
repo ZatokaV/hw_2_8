@@ -18,17 +18,12 @@ for el in authors_data:
 
 
 def change_name_to_id(name):
-    temp_list = []
     authors = Authors.objects()
 
     for author in authors:
-        author_and_id = {author.id: author.fullname}
-        temp_list.append(author_and_id)
+        if author.fullname == name:
+            return author.id
 
-    for el in temp_list:
-        for key, value in el.items():
-            if value == name:
-                return key
     return name
 
 
