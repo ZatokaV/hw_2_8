@@ -16,5 +16,3 @@ class Quotes(Document):
     tags = ListField()
     author = ReferenceField(Authors, reverse_delete_rule=CASCADE)
     quote = StringField()
-
-
