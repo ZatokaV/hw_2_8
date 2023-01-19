@@ -12,18 +12,12 @@ def find_quotes_to_name(query_dict):
     author_name = ''
     all_quotes = []
 
-    authors = Authors.objects()
-    for author in authors:
-        if author.fullname.capitalize() == query_dict['name'][0].capitalize(
-        ) or author.fullname.capitalize().startswith(query_dict['name'][0].capitalize()):
-            author_name = author.fullname
     quotes = Quotes.objects()
     for quote in quotes:
         if quote.author.fullname.capitalize() == query_dict['name'][0].capitalize(
         ) or quote.author.fullname.capitalize().startswith(query_dict['name'][0].capitalize()):
+            author_name = quote.author.fullname
             all_quotes.append(quote.quote)
-    if len(all_quotes) == 0:
-        all_quotes = str("Author's quotes not found")
 
     print(author_name, all_quotes)
 
