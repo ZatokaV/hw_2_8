@@ -1,4 +1,10 @@
 from models import Quotes
+import redis
+from redis_lru import RedisLRU
+
+
+client = redis.StrictRedis(host="localhost", port=6379, password=None)
+cache = RedisLRU(client)
 
 
 def pars_input(query) -> dict:
@@ -8,6 +14,7 @@ def pars_input(query) -> dict:
     return {field: value}
 
 
+@cache
 def find_quotes_to_name(query_dict):
     author_name = ''
     all_quotes = []
@@ -22,6 +29,7 @@ def find_quotes_to_name(query_dict):
     print(f'All quotes by {author_name}: {all_quotes}')
 
 
+@cache
 def find_quote_to_tag(query_dict):
     all_quotes = []
     quotes = Quotes.objects()
@@ -34,6 +42,7 @@ def find_quote_to_tag(query_dict):
         print(result)
 
 
+@cache
 def find_quotes_to_tags(query_dict):
     all_quotes = []
     quotes = Quotes.objects()
